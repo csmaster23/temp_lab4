@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
+
     <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css"/>
+    
+
     <title>Vue Todo</title>
   </head>
   <body>
     <div id="app">
       <h1>A List of Things To Do</h1>
       <p v-show="activeItems.length === 0">You are done with all your tasks! Good job!</p>
-      <form v-on:submit.prevent="addItem">
+      <form name="main" v-on:submit.prevent="addItem">
 	<input type="text" v-model="text">
-	<button type="submit">Add</button>
+  <button v-on:click="setHigh" id="High" type="submit">Add High Priority Task</button>
+  <button v-on:click="setMed" id="Medium" type="submit">Add Medium Priority Task</button>
+  <button v-on:click="setLow" id="Low" type="submit">Add Low Priority Task</button>
       </form>
+
       <div class="controls">
 	<button v-on:click="showAll()">Show All</button>
 	<button v-on:click="showActive()">Show Active</button>
 	<button v-on:click="showCompleted()">Show Completed</button>
 	<button v-on:click="deleteCompleted()">Delete Completed</button>
+  <button v-on:click="showHigh()">Highest Priorities</button>
+  <button v-on:click="showMed()">Medium Priorities</button>
+  <button v-on:click="showLow()">Lowest Priorities</button>
       </div>
       <ul>
 	<li v-for="item in filteredItems" draggable="true" v-on:dragstart="dragItem(item)" v-on:dragover.prevent v-on:drop="dropItem(item)">
-	  <input type="checkbox" v-model="item.completed" v-on:click="completeItem(item)" /><label v-bind:class="{ completed: item.completed }">{{ item.text }}</label><button v-on:click="deleteItem(item)" class="delete">X</button>
+	  <input type="checkbox" v-model="item.completed" v-on:click="completeItem(item)" /><label v-bind:class="{ completed: item.completed }">{{ item.priority }}: {{ item.text }}</label><button v-on:click="deleteItem(item)" class="delete">X</button>
 	</li>
       </ul>
     </div>

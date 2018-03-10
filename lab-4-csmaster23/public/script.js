@@ -5,6 +5,7 @@ var app = new Vue({
     text: '',
     show: 'all',
     drag: {},
+    priority: '',
   },
   created: function() {
     this.getItems();
@@ -17,13 +18,28 @@ var app = new Vue({
     },
     filteredItems: function() {
       if (this.show === 'active')
-	return this.items.filter(function(item) {
-	  return !item.completed;
-	});
+	     return this.items.filter(function(item) {
+	       return !item.completed;
+	     });
       if (this.show === 'completed')
-	return this.items.filter(function(item) {
-	  return item.completed;
-	});
+	     return this.items.filter(function(item) {
+	       return item.completed;
+	     });
+      if (this.show === 'high')
+        return this.items.filter(function(item) {
+          if(item.priority === 'High')
+            return item;
+      });
+      if (this.show === 'med')
+        return this.items.filter(function(item) {
+          if(item.priority === 'Medium')
+            return item;
+      });
+      if (this.show === 'low')
+        return this.items.filter(function(item) {
+          if(item.priority === 'Low')
+            return item;
+      });
       return this.items;
     },
   },
@@ -36,20 +52,40 @@ var app = new Vue({
       }).catch(err => {
       });
     },
+
+
     addItem: function() {
+      console.log(this.priority);
       axios.post("/api/items", {
   text: this.text,
+  priority: this.priority,
   completed: false
       }).then(response => {
   this.text = "";
+  this.priority = "";
   this.getItems();
   return true;
       }).catch(err => {
       });
     },
+
+    setHigh: function() {
+      this.priority = "High";
+      /*console.log(this.priority);*/
+    },
+    setMed: function() {
+      this.priority = "Medium";
+      /*console.log(this.priority);*/
+    },
+    setLow: function() {
+      this.priority = "Low";
+      /*console.log(this.priority);*/
+    },
+    
     completeItem: function(item) {
       axios.put("/api/items/" + item.id, {
   text: item.text,
+  priority: item.priority,
   completed: !item.completed,
   orderChange: false,
       }).then(response => {
@@ -72,6 +108,15 @@ var app = new Vue({
     },
     showCompleted: function() {
       this.show = 'completed';
+    },
+    showHigh: function() {
+      this.show = 'high';
+    },
+    showMed: function() {
+      this.show = 'med';
+    },
+    showLow: function() {
+      this.show = 'low';
     },
     deleteCompleted: function() {
       this.items.forEach(item => {

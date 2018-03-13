@@ -3,8 +3,8 @@
   <head>
 
     <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
+   <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="/styles.css"/>
-    
 
     <title>Vue Todo</title>
   </head>
@@ -27,13 +27,27 @@
   <button v-on:click="showHigh()">Highest Priorities</button>
   <button v-on:click="showMed()">Medium Priorities</button>
   <button v-on:click="showLow()">Lowest Priorities</button>
+  <button v-on:click="sortedFun()">Sort by Priority</button>
       </div>
       <ul>
 	<li v-for="item in filteredItems" draggable="true" v-on:dragstart="dragItem(item)" v-on:dragover.prevent v-on:drop="dropItem(item)">
-	  <input type="checkbox" v-model="item.completed" v-on:click="completeItem(item)" /><label v-bind:class="{ completed: item.completed }">{{ item.priority }}: {{ item.text }}</label><button v-on:click="deleteItem(item)" class="delete">X</button>
+	  <input type="checkbox" v-model="item.completed" v-on:click="completeItem(item)" /><label v-bind:class="{ completed: item.completed }">{{ item.priority }}: {{ item.text }}</label><button v-on:click="increment(item)" class="delete">↑</button><button v-on:click="decrement(item)" class="delete">↓</button><button v-on:click="deleteItem(item)" class="delete">X</button>
 	</li>
       </ul>
+
+      <div> <hr> </div> <div> <br> </div> <div> <br> </div> <div> <br> </div> <div> <br> </div> <div> <br> </div>
+      <div> <br> </div> <div> <br> </div> <div> <br> </div> <div> <br> </div> <div> <br> </div> <div> <br> </div>
+      <div style="background-color: gray; position: fixed; width: 80vw;">
+      <a style="color: white; text-align: center; text-decoration: none;" href="https://github.com/BYU-CS260-Winter-2018/lab-4-csmaster23.git">&ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; GitHub</a>
+      </div>
+
     </div>
+    
+        
+
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js" integrity="sha256-pU9euBaEcVl8Gtg+FRYCtin2vKLN8sx5/4npZDmY2VA=" crossorigin="anonymous"></script>
     <script src="/script.js"></script>
